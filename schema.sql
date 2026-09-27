@@ -1,24 +1,35 @@
 CREATE TABLE IF NOT EXISTS users (
   id BIGSERIAL PRIMARY KEY,
   username VARCHAR(24) UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
   display_name VARCHAR(32) NOT NULL,
-  avatar JSONB NOT NULL DEFAULT '{}'::jsonb,
-  inventory JSONB NOT NULL DEFAULT '[]'::jsonb,
+  password_hash TEXT NOT NULL,
+  avatar JSONB NOT NULL DEFAULT '{"skin":"#f2c6a0","shirt":"#287cff","pants":"#252b3d","face":"classic"}',
+  inventory JSONB NOT NULL DEFAULT '[]',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
 CREATE TABLE IF NOT EXISTS games (
   id BIGSERIAL PRIMARY KEY,
   owner_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   name VARCHAR(80) NOT NULL,
   description TEXT NOT NULL DEFAULT '',
   thumbnail TEXT NOT NULL DEFAULT '',
-  data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  scene JSONB NOT NULL DEFAULT '{"objects":[]}',
   is_public BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
-CREATE INDEX IF NOT EXISTS games_owner_idx ON games(owner_id);
-CREATE INDEX IF NOT EXISTS games_public_idx ON games(is_public);
+CREATE TABLE IF NOT EXISTS saved_games (
+  user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+  game_id BIGINT REFERENCES games(id) ON DELETE CASCADE,
+  PRIMARY KEY(user_id, game_id)
+);
+CREATE TABLE IF NOT EXISTS catalog_items (
+  id BIGSERIAL PRIMARY KEY,
+  creator_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name VARCHAR(80) NOT NULL,
+  type VARCHAR(20) NOT NULL,
+  asset JSONB NOT NULL DEFAULT '{}',
+  price INTEGER NOT NULL DEFAULT 0,
+  is_public BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

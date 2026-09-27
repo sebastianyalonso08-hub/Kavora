@@ -1,22 +1,13 @@
 {
-  "name": "kavora",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Kavora - web-based game platform MVP",
-  "main": "server.js",
-  "scripts": {
-    "start": "node -r dotenv/config server.js",
-    "dev": "node -r dotenv/config --watch server.js"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "pg": "^8.13.1",
-    "ws": "^8.18.0"
+  "name":"kavora-from-scratch",
+  "version":"1.0.0",
+  "private":true,
+  "scripts":{"start":"node server.js"},
+  "dependencies":{
+    "express":"^4.21.2",
+    "pg":"^8.13.1",
+    "bcryptjs":"^2.4.3",
+    "jsonwebtoken":"^9.0.2",
+    "ws":"^8.18.0"
   }
 }
