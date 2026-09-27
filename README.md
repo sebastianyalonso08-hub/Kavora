@@ -1,46 +1,15 @@
-# KAVORA
+# Kavora V2
 
-Kavora is a web-first game platform MVP inspired by the idea of user-created games.
+MVP corregido con una interfaz más cercana a una plataforma de creación/juegos moderna, Kavora Studio y Kavora Client.
 
-## Included
+## Mejoras
+- Navegación lateral estilo plataforma de juegos.
+- Discover / My Games / Avatar / Create / Marketplace.
+- Studio con Explorer, viewport, toolbar y propiedades.
+- Client con mundo 3D-like, personaje y WebSocket multiplayer.
+- Backend arranca el esquema PostgreSQL automáticamente.
+- Si no hay DATABASE_URL, funciona en modo demo en memoria para probar localmente.
+- Render listo mediante render.yaml.
 
-- Kavora website
-- Register/login
-- Persistent user data through PostgreSQL
-- Avatar editor
-- Inventory
-- Kavora Studio: browser-based scene editor
-- Save/publish games
-- Kavora Client: browser game runtime
-- WebSocket multiplayer foundation
-- Render deployment configuration
-- Dark cyan/violet Kavora visual style
-- Uploaded Kavora logo included as `public/kavora-logo.png`
-
-## Run locally
-
-1. Install Node.js 20+.
-2. Create a PostgreSQL database.
-3. Copy `.env.example` to `.env` and fill in the values.
-4. Run the SQL in `schema.sql`.
-5. Run:
-
-```bash
-npm install
-npm start
-```
-
-6. Open `http://localhost:10000`.
-
-## Render
-
-Create a PostgreSQL database and a Web Service using this repository/project. Set:
-
-- `DATABASE_URL`
-- `JWT_SECRET`
-
-The included `render.yaml` configures the web service.
-
-## Important
-
-This is an MVP foundation, not a production-scale Roblox replacement. The multiplayer server synchronizes simple player positions and the Studio stores simple scene JSON. Before a public launch, add moderation, rate limits, asset validation, secure session handling, backups, abuse prevention, and a persistent database/storage plan.
+## Producción
+Para persistencia real usa PostgreSQL y configura DATABASE_URL y JWT_SECRET. El modo demo se pierde al reiniciar.
