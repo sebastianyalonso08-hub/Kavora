@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS users (
+  id BIGSERIAL PRIMARY KEY,
+  username VARCHAR(24) UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  display_name VARCHAR(32) NOT NULL,
+  avatar JSONB NOT NULL DEFAULT '{}'::jsonb,
+  inventory JSONB NOT NULL DEFAULT '[]'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS games (
+  id BIGSERIAL PRIMARY KEY,
+  owner_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name VARCHAR(80) NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  thumbnail TEXT NOT NULL DEFAULT '',
+  data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  is_public BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS games_owner_idx ON games(owner_id);
+CREATE INDEX IF NOT EXISTS games_public_idx ON games(is_public);
